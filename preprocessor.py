@@ -1,7 +1,6 @@
 import csv
 import os
 
-from torch.profiler import profile
 
 path = input("Input file: ")
 
