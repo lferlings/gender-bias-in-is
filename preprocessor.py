@@ -21,6 +21,8 @@ with open(path, 'r', encoding="utf-8-sig") as file:
 
         first_author = authors.split(';')[0]  # extract leading author
         year = row[4]
+        if year.isdecimal() and int(year) < 2000:
+            continue
         preprocessed_data.append((first_author, year))  # insert extracted data into the list
 
 
