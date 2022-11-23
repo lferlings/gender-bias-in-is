@@ -5,7 +5,8 @@ import csv
 
 female_set = set()
 male_set = set()
-with open('./names.txt', 'r') as file:
+unisex_set = set()
+with open('./names.txt', 'r', encoding="utf-8-sig") as file:
     line = file.readline().removesuffix('\n')
     while line != '':  # end of file
         if line.startswith('#'):  # comment lines
@@ -14,13 +15,27 @@ with open('./names.txt', 'r') as file:
         name = line.split(',')[0]
         sex = line.split(',')[1]
         if sex == 'M':
-            male_set.add(name)
+            male_set.add(name.upper())
         else:
-            female_set.add(name)
+            female_set.add(name.upper())
 
         line = file.readline().removesuffix('\n')  # read next line
 
-unisex_set = male_set.intersection(female_set)  # intersection of male and female is unisex
+with open("../dataverse_files/wgnd_noctry.csv", 'r', encoding="utf-8-sig") as file:
+    reader = csv.reader(file)
+    reader.__next__()  # skip headline
+    for row in reader:
+        name = row[0]
+        sex = row[1]
+        if sex == 'M':
+            male_set.add(name)
+        elif sex == 'F':
+            female_set.add(name)
+        else:
+            unisex_set.add(name)
+
+unisex_set.union(male_set.intersection(female_set))
+
 print('Resulting unisex names amount: ', len(unisex_set))
 print('Resulting female names amount: ', len(female_set))
 print('Resulting male names amount: ', len(male_set))
@@ -45,21 +60,22 @@ for row in data:
         if first_name.endswith('.'):
             continue
 
-        if first_name in unisex_set:
+        if first_name.upper() in unisex_set:
             unisex = unisex + 1
-        elif first_name in male_set:
+        elif first_name.upper() in male_set:
             male = male + 1
-        elif first_name in female_set:
+        elif first_name.upper() in female_set:
             female = female + 1
         else:
-            # print(f'Could not classify {first_name}.')
+            print(f'Could not classify {first_name}.')
             # print(row)
             unclassified = unclassified + 1
     except IndexError:  # in case no first name is provided
         print(row)
         continue
 
-print("Male: ", male)
-print("Female: ", female)
-print("Unisex: ", unisex)
+print("Classified: ", male + female + unisex)
+print("\tMale: ", male)
+print("\tFemale: ", female)
+print("\tUnisex: ", unisex)
 print("Unclassified: ", unclassified)
