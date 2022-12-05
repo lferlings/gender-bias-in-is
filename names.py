@@ -2,7 +2,6 @@
 from builtins import set
 import csv
 
-
 female_set = set()
 male_set = set()
 unisex_set = set()
@@ -40,7 +39,6 @@ print('Resulting unisex names amount: ', len(unisex_set))
 print('Resulting female names amount: ', len(female_set))
 print('Resulting male names amount: ', len(male_set))
 
-
 # Read author names
 data = []
 path = '../Daten/preprocessed.csv'
@@ -48,7 +46,6 @@ with open(path, 'r', encoding="utf-8-sig") as file:
     reader = csv.reader(file)
     for row in reader:
         data.append(row)
-
 
 female = 0
 male = 0
@@ -67,7 +64,7 @@ for row in data:
         elif first_name.upper() in female_set:
             female = female + 1
         else:
-            print(f'Could not classify {first_name}.')
+            print(f'Could not classify {row}.')
             # print(row)
             unclassified = unclassified + 1
     except IndexError:  # in case no first name is provided
@@ -75,7 +72,7 @@ for row in data:
         continue
 
 print("Classified: ", male + female + unisex)
-print("\tMale: ", male)
-print("\tFemale: ", female)
-print("\tUnisex: ", unisex)
+print(f"\tMale: {male}, {male * 100 / (male + female + unisex)}%")
+print(f"\tFemale: {female}, {female * 100 / (male + female + unisex)}%")
+print(f"\tUnisex: {unisex}, {unisex * 100 / (male + female + unisex)}%")
 print("Unclassified: ", unclassified)
