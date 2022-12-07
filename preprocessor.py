@@ -1,37 +1,47 @@
 import csv
+import json
 import os
 
 
 # path = input("Input file: ")
-path = '../Daten/merged.csv'
+path = './Data/merged.json'
+preprocessed = []
 
-if not os.path.isfile(path) or path.split('.').pop() != 'csv':
-    print(f'{path} is not a valid file.')
-    exit(-1)
+with open(path, 'r') as file:
+    data = json.load(file)
 
+    for key in data.keys():  # iterate over bibtex data
+        entry = data[key]
 
-preprocessed_data = []
+        try:
+            affiliation = entry['affiliations'].split(';')[0]  # get origin of the paper (leading)
+            if not affiliation.__contains__('Germany'):  # skip if not german
+                continue
 
-with open(path, 'r', encoding="utf-8-sig") as file:
-    data = csv.reader(file)
+            authors = entry['author']  # extract authors (with full names)
+            if authors == '':  # skip if empty (in case Scopus did not have author data)
+                continue
+            first_author = authors.split(' and ')[0]  # extract leading author
 
-    for row in data:  # iterate over csv data
-        authors = row[1]  # extract authors (with full names)
-        if authors == '':  # skip if empty (in case Scopus did not have author data)
+            year = entry['year']  # get year
+            if not year.isnumeric() or int(year) < 2000:
+                continue
+
+            try:
+                citations = entry['note'].split(': ')[1].split(';')[0]  # get amount of citations
+            except IndexError:
+                citations = -1  # if not available -1
+        except KeyError:
             continue
 
-        first_author = authors.split(';')[0]  # extract leading author
-        year = row[4]
-        if year.isnumeric() and int(year) < 2000:
-            continue
-        preprocessed_data.append((first_author, year))  # insert extracted data into the list
+        preprocessed.append((first_author, year, citations))  # insert extracted data into the list
 
 
 # write_path = input("Name output file: ")
-write_path = '../Daten/preprocessed.csv'
-print(f'Preprocessed data contains {len(preprocessed_data)} rows. Writing to "{write_path}"...')
+write_path = './Data/preprocessed.csv'
+print(f'Preprocessed data contains {len(preprocessed)} rows. Writing to "{write_path}"...')
 with open(write_path, 'w', encoding="utf-8", newline='') as file:
     writer = csv.writer(file)
-    writer.writerows(preprocessed_data)
+    writer.writerows(preprocessed)
 
 print("Finished.")

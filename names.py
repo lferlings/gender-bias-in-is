@@ -41,8 +41,8 @@ print('Resulting male names amount: ', len(male_set))
 
 # Read author names
 data = []
-path = '../Daten/preprocessed.csv'
-with open(path, 'r', encoding="utf-8-sig") as file:
+path = './Data/preprocessed.csv'
+with open(path, 'r', encoding="utf-8") as file:
     reader = csv.reader(file)
     for row in reader:
         data.append(row)
@@ -51,11 +51,15 @@ female = 0
 male = 0
 unisex = 0
 unclassified = 0
+missing_name = 0
 for row in data:
     try:
-        first_name = row[0].split(',')[1].split(' ')[1]
-        if first_name.endswith('.'):
-            continue
+        first_name = row[0].split(', ')[1].split(' ')[0]  # get first name, if there are intermediate names the first one (e.g firstname is "Jan Thomas" it will extract "Jan")
+
+        if first_name.endswith('.'):  # if name is st like "J. Thomas"
+            first_name = row[0].split(', ')[1].split(' ')[1]  # switch to "Thomas"
+
+        first_name = first_name.split('-')[0]  # if name is assembled (e.g. Jan-Thomas)
 
         if first_name.upper() in unisex_set:
             unisex = unisex + 1
@@ -69,6 +73,7 @@ for row in data:
             unclassified = unclassified + 1
     except IndexError:  # in case no first name is provided
         print(row)
+        missing_name = missing_name + 1
         continue
 
 print("Classified: ", male + female + unisex)
@@ -76,3 +81,4 @@ print(f"\tMale: {male}, {male * 100 / (male + female + unisex)}%")
 print(f"\tFemale: {female}, {female * 100 / (male + female + unisex)}%")
 print(f"\tUnisex: {unisex}, {unisex * 100 / (male + female + unisex)}%")
 print("Unclassified: ", unclassified)
+print("No name provided: ", missing_name)

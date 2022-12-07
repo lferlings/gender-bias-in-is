@@ -5,6 +5,7 @@ import json
 import threading
 
 jsons = []
+database = {}
 
 
 def transform_to_json_string(bibtex_file_path):
@@ -12,10 +13,12 @@ def transform_to_json_string(bibtex_file_path):
         bib_database = bibtexparser.load(bibtex_file)
 
     bib = bib_database.get_entry_dict()
-    jsons.append(json.dumps(bib))
+    for key in bib.keys():
+        database[key] = bib[key]
+    print(bibtex_file_path, " finished.")
 
 
-dir = os.listdir("./BibTex Daten/Raw Data/")
+dir = os.listdir("./Data/Raw Data/")
 threads = []
 
 start = time.time()
@@ -36,16 +39,15 @@ for t in threads:
 # wait for all threads to finish
 for t in threads:
     t.join()
-print(time.time() - start, "ms elapsed.")
+print((time.time() - start)/60, "m elapsed.")
 
+start = time.time()
 # add up json string
-jsonStr = ""
-for bib in jsons:
-    jsonStr = jsonStr + bib
+jsonStr = json.dumps(database)
 
 # write json to disk
-with open("./BibTex Daten/merged.json", "w") as file:
+with open("./Data/merged.json", "w") as file:
     file.write(jsonStr)
 
 print("Finished converting to json and saved.")
-print(time.time() - start, "ms elapsed.")
+print(time.time() - start, "s elapsed.")
