@@ -13,16 +13,16 @@ with open(path, 'r', encoding="utf-8-sig") as file:
         if year != '':
             data.append(int(year))
 
-occurance = {}
+occurrence = {}
 for entry in data:
-    amount = occurance.get(entry, 0)
-    occurance[entry] = amount + 1
+    amount = occurrence.get(entry, 0)
+    occurrence[entry] = amount + 1
 
-keys = list(occurance.keys())
+keys = list(occurrence.keys())
 keys.sort()
-cumsum = {(keys[0] - 1): 0}
+cumsum = {}
 for key in keys:
-    cumsum[key] = cumsum[key - 1] + occurance[key]
+    cumsum[key] = cumsum.get(key - 1, 0) + occurrence[key]
 
 
 print(cumsum[2023] - cumsum[2000])
