@@ -130,3 +130,6 @@ dmypy.json
 
 #IDE
 .idea/
+
+# Too large file
+Data/merged.json
