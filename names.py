@@ -5,7 +5,7 @@ import csv
 female_set = set()
 male_set = set()
 unisex_set = set()
-with open('./names.txt', 'r', encoding="utf-8-sig") as file:
+with open('./Data/Names/names.txt', 'r', encoding="utf-8-sig") as file:
     line = file.readline().removesuffix('\n')
     while line != '':  # end of file
         if line.startswith('#'):  # comment lines
@@ -20,7 +20,7 @@ with open('./names.txt', 'r', encoding="utf-8-sig") as file:
 
         line = file.readline().removesuffix('\n')  # read next line
 
-with open("../dataverse_files/wgnd_noctry.csv", 'r', encoding="utf-8-sig") as file:
+with open("./Data/Names/wgnd_noctry.csv", 'r', encoding="utf-8-sig") as file:
     reader = csv.reader(file)
     reader.__next__()  # skip headline
     for row in reader:
