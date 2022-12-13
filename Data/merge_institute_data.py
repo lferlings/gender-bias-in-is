@@ -25,5 +25,5 @@ with open('institute_data.csv', 'w', newline='') as file:
         male = data[year][0]
         female = data[year][1]
         row = (year, male + female, male, female)
-        print(row, f", Male: {male/(male + female) * 100}%, Female: {female/(male + female) * 100}")
+        print(row, f", Male: {male/(male + female) * 100}%, Female: {female/(male + female) * 100}%")
         writer.writerow(row)
