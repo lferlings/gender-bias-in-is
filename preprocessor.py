@@ -24,7 +24,7 @@ with open(path, 'r') as file:
             first_author = authors.split(' and ')[0]  # extract leading author
 
             year = entry['year']  # get year
-            if not year.isnumeric() or int(year) < 2000:
+            if not year.isnumeric() or int(year) < 2000 or int(year) > 2022:
                 continue
 
             try:

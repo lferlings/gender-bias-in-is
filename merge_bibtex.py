@@ -13,6 +13,7 @@ def transform_to_json_string(bibtex_file_path):
         bib_database = bibtexparser.load(bibtex_file)
 
     bib = bib_database.get_entry_dict()
+    print(f"{bibtex_file_path} contains {len(bib)} entries.")
     for key in bib.keys():
         database[key] = bib[key]
     print(bibtex_file_path, " finished.")
