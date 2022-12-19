@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 data = []
-path = './Data/preprocessed.csv'
+path = 'data/preprocessed.csv'
 
 with open(path, 'r', encoding="utf-8-sig") as file:
     reader = csv.reader(file)

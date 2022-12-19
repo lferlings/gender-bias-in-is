@@ -18,12 +18,12 @@ def transform_to_json_string(bibtex_file_path):
     print(bibtex_file_path, " finished.")
 
 
-dir = os.listdir("./Data/Raw Data/")
+dir = os.listdir("data/raw_data/")
 threads = []
 
 start = time.time()
 for item in dir:
-    path = "./BibTex Daten/Raw Data/" + item
+    path = "./data/raw_data/" + item
     if os.path.isfile(path):  # for file in dir
         threads.append(threading.Thread(target=transform_to_json_string, args=(path,)))
 
@@ -46,7 +46,7 @@ start = time.time()
 jsonStr = json.dumps(database)
 
 # write json to disk
-with open("./Data/merged.json", "w") as file:
+with open("data/merged.json", "w") as file:
     file.write(jsonStr)
 
 print("Finished converting to json and saved.")

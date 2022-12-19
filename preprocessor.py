@@ -4,7 +4,7 @@ import os
 
 
 # path = input("Input file: ")
-path = './Data/merged.json'
+path = 'data/merged.json'
 preprocessed = []
 
 with open(path, 'r') as file:
@@ -38,7 +38,7 @@ with open(path, 'r') as file:
 
 
 # write_path = input("Name output file: ")
-write_path = './Data/preprocessed.csv'
+write_path = 'data/preprocessed.csv'
 print(f'Preprocessed data contains {len(preprocessed)} rows. Writing to "{write_path}"...')
 with open(write_path, 'w', encoding="utf-8", newline='') as file:
     writer = csv.writer(file)

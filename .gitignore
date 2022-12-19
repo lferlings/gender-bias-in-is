@@ -132,4 +132,4 @@ dmypy.json
 .idea/
 
 # Too large file
-Data/merged.json
+data/merged.json

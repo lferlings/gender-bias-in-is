@@ -1,7 +1,7 @@
 import csv
 import os
 
-path = './Institute Data/'
+path = 'institute_data/'
 file_names = os.listdir(path)
 
 data = {}

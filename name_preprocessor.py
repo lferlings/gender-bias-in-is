@@ -2,7 +2,7 @@ female = {}
 male = {}
 
 # Read data
-with open('./Data/Names/yob2021.txt', 'r') as file:
+with open('data/names/yob2021.txt', 'r') as file:
     line = file.readline().removesuffix('\n')
     while line != '':
         if line.startswith('#'):
@@ -38,7 +38,7 @@ for name in unisex_set:
 
 print(removals, ' names has been removed.')
 
-with open('./Data/Names/names.txt', 'w') as file:
+with open('data/names/names.txt', 'w') as file:
     for name in female.keys():
         file.write(name + ',F\n')
     for name in male.keys():
