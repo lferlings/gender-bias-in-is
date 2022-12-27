@@ -14,13 +14,13 @@ with open('data/names/names.txt', 'r', encoding="utf-8-sig") as file:
         name = line.split(',')[0]
         sex = line.split(',')[1]
         if sex == 'M':
-            male_set.add(name.upper())
+            male_set.add(name.lower())
         else:
-            female_set.add(name.upper())
+            female_set.add(name.lower())
 
         line = file.readline().removesuffix('\n')  # read next line
 
-with open("data/names/wgnd_noctry.csv", 'r', encoding="utf-8-sig") as file:
+with open("data/names/wgnd_2_0_name-gender_nocode.csv", 'r', encoding="utf-8-sig") as file:
     reader = csv.reader(file)
     reader.__next__()  # skip headline
     for row in reader:
@@ -61,15 +61,15 @@ for row in data:
 
         first_name = first_name.split('-')[0]  # if name is assembled (e.g. Jan-Thomas)
 
-        if first_name.upper() in unisex_set:
+        if first_name.lower() in unisex_set:
             unisex = unisex + 1
             print(row)
-        elif first_name.upper() in male_set:
+        elif first_name.lower() in male_set:
             male = male + 1
-        elif first_name.upper() in female_set:
+        elif first_name.lower() in female_set:
             female = female + 1
         else:
-            # print(f'Could not classify {row}.')
+            print(f'Could not classify {row}.')
             # print(row)
             unclassified = unclassified + 1
     except IndexError:  # in case no first name is provided
