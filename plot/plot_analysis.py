@@ -57,8 +57,8 @@ def plot_males_and_females_share(male_dict, female_dict):
 
     plt.plot(years, male_percentage_change, label="Veränderung männlich")
     plt.plot(years, female_percentage_change, label="Veränderung weiblich")
-    plt.plot(years, male_poly_fit(years), label="Durchschnittliche Steigung (m)")
-    plt.plot(years, female_poly_fit(years), label="Durchschnittliche Steigung (w)")
+    plt.plot(years, male_poly_fit(years), label="Durchschnittliche Steigerung (m)")
+    plt.plot(years, female_poly_fit(years), label="Durchschnittliche Steigerung (w)")
     # plt.suptitle("Veränderung im Geschlechteranteil und durchschnittliche Steigung")
 
     plt.xlabel("Jahr")

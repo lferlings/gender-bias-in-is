@@ -110,8 +110,8 @@ def compare_plots(male_share_dict, female_share_dict):
 
     plt.plot(years, male, label="männliche Autoren")
     plt.plot(years, female, label="weibliche Autoren")
-    plt.plot(years, inst_male, label="männliche Mitarbeiter")
-    plt.plot(years, inst_female, label="weibliche Mitarbeiter")
+    plt.plot(years, inst_male, label="männliche Mitarbeitende")
+    plt.plot(years, inst_female, label="weibliche Mitarbeitende")
     plt.plot(years, stu_male, label="männliche Studierende")
     plt.plot(years, stu_female, label="weibliche Studierende")
 
