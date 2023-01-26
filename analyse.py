@@ -146,6 +146,8 @@ for year in years:
     female_average_citations[year] = female_citations_per_year[year] / females_per_year[year]
 
 
+# Execute tests and analysis
+
 hypothesis_testing.test_h1(males_per_year.copy(), females_per_year.copy())
 hypothesis_testing.test_h2(females_per_year.copy())
 hypothesis_testing.test_h3(males_per_year.copy(), females_per_year.copy())
@@ -168,21 +170,4 @@ compare.compare_institute(male_share, female_share)
 compare.compare_students(male_share, female_share)
 compare.compare_plots(male_share, female_share)
 
-# path = './data/analyse/'
-# with open(path + 'male_publications.csv', 'w') as file:
-#     w = csv.writer(file)
-#     for key in males_per_year.keys():
-#         w.writerow((key, males_per_year[key]))
-# with open(path + 'female_publications.csv', 'w') as file:
-#     w = csv.writer(file)
-#     for key in males_per_year.keys():
-#         w.writerow((key, males_per_year[key]))
-# with open(path + 'male_citations.csv', 'w') as file:
-#     w = csv.writer(file)
-#     for key in males_per_year.keys():
-#         w.writerow((key, males_per_year[key]))
-# with open(path + 'male_citations.csv', 'w') as file:
-#     w = csv.writer(file)
-#     for key in males_per_year.keys():
-#         w.writerow((key, males_per_year[key]))
 

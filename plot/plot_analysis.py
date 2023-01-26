@@ -39,12 +39,17 @@ def plot_males_and_females_share(male_dict, female_dict):
     male_percentage_change = [((y - male[i - 1]) / male[i - 1]) * 100 for i, y in enumerate(male)][:]
     female_percentage_change = [((y - female[i - 1]) / female[i - 1]) * 100 for i, y in enumerate(female)][:]
 
+    male_absolute_change = [(y - male[i - 1]) for i, y in enumerate(male)][1:]
+    female_absolute_change = [(y - female[i - 1]) for i, y in enumerate(female)][1:]
+    years_change = years[1:]
+
     # Calculate the linear regression line (i.e. the best fit line) for the changes (average slope)
-    female_poly_coef = np.polyfit(years, female_percentage_change, 1)
+    female_poly_coef = np.polyfit(years_change, female_absolute_change, 1)
     female_poly_fit = np.poly1d(female_poly_coef)
 
-    male_poly_coef = np.polyfit(years, male_percentage_change, 1)
+    male_poly_coef = np.polyfit(years_change, male_absolute_change, 1)
     male_poly_fit = np.poly1d(male_poly_coef)
+
 
     plt.plot(years, male, label="männliche Autoren")
     plt.plot(years, female, label="weibliche Autoren")
@@ -55,15 +60,15 @@ def plot_males_and_females_share(male_dict, female_dict):
     plt.savefig(path + "gender_change1.jpg")
     plt.show()
 
-    plt.plot(years, male_percentage_change, label="Veränderung männlich")
-    plt.plot(years, female_percentage_change, label="Veränderung weiblich")
-    plt.plot(years, male_poly_fit(years), label="Durchschnittliche Steigerung (m)")
-    plt.plot(years, female_poly_fit(years), label="Durchschnittliche Steigerung (w)")
+    # plt.plot(years_change, male_absolute_change, label="Veränderung männlich")
+    plt.plot(years_change, female_absolute_change, label="Veränderung weiblich")
+    # plt.plot(years_change, male_poly_fit(years_change), label="Durchschnittliche Steigerung (m)")
+    plt.plot(years_change, female_poly_fit(years_change), label="Durchschnittliche Steigerung (w)")
     # plt.suptitle("Veränderung im Geschlechteranteil und durchschnittliche Steigung")
 
     plt.xlabel("Jahr")
     plt.ylabel("Prozent")
-    plt.legend(loc='upper left', bbox_to_anchor=(0.5, 1.05))
+    plt.legend()
     plt.savefig(path + "gender_change2.jpg")
 
     plt.show()
@@ -97,4 +102,7 @@ def plot_sum(male_dict, female_dict):
     years, sums = zip(*sum_sorted)
 
     plt.plot(years, sums)
+    plt.xlabel("Jahr")
+    plt.ylabel("Publikationen")
+    plt.savefig(path + "publications.jpg")
     plt.show()
